@@ -1,0 +1,15 @@
+/* body {
+    background: rgb(36, 105, 167);
+    background: linear-gradient(80deg, rgba(36, 105, 167, 1) 42%, rgba(189, 215, 240, 1) 100%);
+} */
+
+
+.table {
+    overflow-x: auto;
+}
+
+
+
+.cuerpo {
+    min-height: 100vh;
+}
