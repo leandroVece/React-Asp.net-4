@@ -11,6 +11,9 @@ public class Archivo
     public string Foto { get; set; }
 
     [NotMapped]
+    public byte[] img { get; set; }
+
+    [NotMapped]
     [JsonIgnore]
     public Articulo articulo { get; set; }
 

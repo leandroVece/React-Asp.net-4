@@ -34,12 +34,27 @@ public class ProfileController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public IActionResult GetById(Guid id)
+    public async Task<ActionResult> GetById(Guid id)
     {
-        // var response = _db.Users.Join(_db.Profile, u => u.Id, p => p.userForeiKey,
-        // (u, p) => new { u.userName, p.userForeiKey, p.id, p.Nombre, p.Direccion, p.Telefono, p.Referencia })
-        // .Where(x => x.userForeiKey == id).FirstOrDefault();
+
         var response = _dbProfile.GetById(id);
+
+        if (response.Profile?.archivo != null)
+        {
+            if (System.IO.File.Exists(response.Profile?.archivo.Foto))
+            {
+
+                var path = response.Profile.archivo.Foto;
+                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        await fs.CopyToAsync(ms);
+                        response.Profile.archivo.img = ms.ToArray();
+                    }
+                }
+            }
+        }
         return Ok(response);
     }
 

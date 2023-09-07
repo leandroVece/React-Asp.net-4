@@ -43,7 +43,6 @@ const Pedido = () => {
     const HandelDelete = (id) => {
         deleteWihtUrl(id, `/api/pedido/${id}`)
     }
-    console.log(db);
 
     var permisos = roles.find(rol => (rol.type === auth.cookies.get("rol")) ? rol : null);
 

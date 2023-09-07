@@ -4,6 +4,7 @@ import * as bootstrap from 'bootstrap';
 import Parte1 from "./parte1";
 import Parte2 from "./parte2";
 import Parte3 from "./parte3";
+import { useLocation } from "react-router-dom";
 
 const Home = () => {
     const auth = useAuth();
@@ -17,6 +18,9 @@ const Home = () => {
             tabTrigger.show()
         })
     })
+
+    const ruta = useLocation()
+    console.log(ruta);
 
 
     return (

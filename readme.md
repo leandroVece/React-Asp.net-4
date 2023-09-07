@@ -1397,3 +1397,24 @@ y aunque funciona, tiene un gran problema y es que no se puede manejar los archi
 Una simple solucion es tratarla como lo hicimos a nuestros repositorio. Crearemos una nueva interfaz y una clase que herede de ella todas sus funciones, luego lo inyectaremos en nuestro archivo program y lo trataremos como una dependencia mas.
 
 >Nota: dejo la resolucion como un reto, pero como siempre saben que la solucion esta en el archivo correspondiente dentro del repositorio.# React-Asp.net-4
+
+## ¿Manejo de archivo por parte del backend o frontend?
+
+Si probaron todo lo que hemos hecho hasta aqui sabran que hay algunos inconvenientes a la hora de guardar los archivos. Esto es debido a que usamos dos librerias distintas que trabajan en paralelo en el momento del desarrollo.
+
+Cuando nosotros empaquetamos nuestro proyecto y lo subimos, todo estos archivos se combinan para formar una sola cosa. Para este caso en particular vemos que los archivos estaticos de React se trasladan a la carpeta de wwwroot y estos siguen funcionando correctamente porque hacen uso de las rutas dinamicas.
+
+![Publis](./imgReadme/imgDto/publish.png)
+
+Seguramente compartiran el mismo pensamiento que yo: "¿Para que guardo el nombre y la direccion si solo necesito uno de los dos? Y ¿no seria mas facil manejar la ruta de manera dinamica?
+
+La razon por la que guardamos las dos, es para evitar nuevos cambios que vamos a necesitar ahora. Y, la respuesta a la segunda pregunta es si. es mas facil manejarlo como una url, de esa manera solo tenemos que buscar el nombre del archivo en la carpeta estatica. Adicionalmente tengo que Recordar que este trabajo es puramente educativo, por lo que nos centraremos mas en aprender a como hacerlo que hacerlo correctamente desde el inicio.
+
+>Recordatorio Amigable: Las puebas y errores son los pasos fundamentales, segun mi humilde opinion, que todo programador no puede evitar. Si nos conformamos con poco, nunca creceremos y si buscamos lo facil nunca seremos competentes.
+
+Claro que esta respuesta esta condicionada a la pregunta ¿que tan grande es el proyecto? Una mejor organizacion hasta cierto punto nos permitira ahorranos trabajo y ser mas eficiente a la hora de la busqueda. Por ejemplo, Crear una nueva carpeta cada año. Por lo general el usuario tiende a usar la informacion y los archivos mas nuevos, por lo que los archivos viejos se van desplegando lentamente a otro servidores que tiene menos consumos.
+
+De esta manera se puede economizar en gastos y el usuario puede obtener la informacion si es que lo necesitara en un futuro.
+
+Seguramente puedes 
+

@@ -30,11 +30,23 @@ public class ArchivoController : ControllerBase
         _helpers = helpers;
     }
     [HttpGet]
-    public IActionResult GetPage()
+    [Route("perfil")]
+    public async Task<IActionResult> GetPage(string ruta)
     {
         try
         {
-            return Ok(_db.Archivo);
+            if (ruta != null)
+            {
+                using (var fs = new FileStream(ruta, FileMode.Open, FileAccess.Read))
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        await fs.CopyToAsync(ms);
+                        return Ok(ms.ToArray());
+                    }
+                }
+            }
+            return Ok();
         }
         catch (System.Exception e)
         {
@@ -42,15 +54,32 @@ public class ArchivoController : ControllerBase
             return Ok();
         }
     }
+    // [HttpGet]
+    // Route[("articulo")]
 
-    // [HttpPost]
-    // [Route("Articulo")]
-    // public IActionResult Post([FromForm] List<IFormFile> archivo)
+    // public IActionResult GetPage()
     // {
-    //     var data = ArchivoHelpers.ConvertArchivo(_evriroment, archivo)
-    //     var response = _mapper.Map<List<Archivo>>(data);
-    //     return Ok();
+    //     try
+    //     {
+    //         return Ok(_db.Archivo);
+    //     }
+    //     catch (System.Exception e)
+    //     {
+    //         Console.WriteLine("no se pudo: \n" + e.ToString());
+    //         return Ok();
+    //     }
     // }
+
+    [HttpPost]
+    [Route("articulo/{id}")]
+    public IActionResult Post(Guid id, [FromForm] ArchivoRequesDTO archivo)
+    {
+        var data = _helpers.ConvertArchivo(_evriroment, archivo.Foto);
+        var response = _mapper.Map<Archivo>(data);
+        response.articulolForeiKey = id;
+        _archivo.SaveArticulo(response);
+        return Ok();
+    }
 
     [HttpPut]
     [Route("articulo/{id}")]

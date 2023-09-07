@@ -23,7 +23,7 @@ const Botones = (id) => {
 
 
 
-    if (auth.cookies.get("rol") !== "cliente") {
+    if (auth.cookies.get("rol") === "cadete") {
         return (
             <>
                 <div className="mt-2 d-grid gap-2 d-md-flex justify-content-md-end">
@@ -34,7 +34,8 @@ const Botones = (id) => {
                 </div>
             </>
         )
-    } else {
+    }
+    if (auth.cookies.get("rol") === "cliente") {
         return (
             <>
                 <div className="mt-2 d-grid gap-2 d-md-flex justify-content-md-end">

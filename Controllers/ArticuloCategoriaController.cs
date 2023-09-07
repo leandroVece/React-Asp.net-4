@@ -67,23 +67,23 @@ public class ArticuloCategoriaController : ControllerBase
         {
             List<ArticuloCategoriaDTO> response = await _articulo.Get2(filtro, (int)page);
 
-
             foreach (var item in response)
             {
-                if (item.Articulo.archivos.Count > 0)
+                if (item.Articulo?.archivos.Count > 0)
                 {
-                    var path = item.Articulo.archivos[0].Foto;
-                    using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                    if (System.IO.File.Exists(item.Articulo?.archivos[0].Foto))
                     {
-                        using (var ms = new MemoryStream())
+                        var path = item.Articulo.archivos[0].Foto;
+                        using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
                         {
-                            await fs.CopyToAsync(ms);
-                            //item.Articulo.archivos[0].img = File(ms.ToArray(),"image/png")
-                            item.Articulo.archivos[0].img = ms.ToArray();
+                            using (var ms = new MemoryStream())
+                            {
+                                await fs.CopyToAsync(ms);
+                                item.Articulo.archivos[0].img = ms.ToArray();
+                            }
                         }
                     }
                 }
-
             }
 
             int totalRecords = (int)Math.Ceiling((decimal)_db.Articulo.Count() / 4);

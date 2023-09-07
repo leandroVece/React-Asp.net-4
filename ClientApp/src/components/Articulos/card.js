@@ -6,12 +6,35 @@ import { useNavigate } from "react-router-dom";
 const Card = ({ data }) => {
     const { id, articulo, categorias } = data
     const nav = useNavigate()
-    const [img, setImg] = useState("data:image/png;base64," + articulo.archivos[0]?.img);
+    const [img, setImg] = useState();
+
+    useState(() => {
+        if (articulo.archivos[0]?.img)
+            setImg("data:image/png;base64," + articulo.archivos[0]?.img)
+        else
+            setImg("./img/imgPendiente.jpg")
+    }, [img])
 
     const handelError = (e) => {
-        e.target.src = "./img/imgPendiente.jpg";
+        e.target.src = "./img/imgRota.jpg";
         e.target.onerror = null;
     }
+
+    function fileExists(path) {
+        fetch(path, { method: 'HEAD' })
+            .then(response => {
+                if (response.ok) {
+                    console.log("Foto existe");
+                }
+                else {
+                    console.log("Foto No existe");
+                }
+            });
+    }
+
+    console.log(fileExists(`./upload/${articulo.archivos[0]?.name}`));
+
+    //.log(fileExists(`./img/imgPendiente.jpg`));
 
     const handelClick = () => {
         nav("/ArticuloDetail/" + id)
@@ -32,7 +55,7 @@ const Card = ({ data }) => {
                     {/* <img onError={handelError}
                         src={imgDb || "./img/imgPendiente.jpg"} alt="" /> */}
                     <img onError={handelError}
-                        src={img || "./img/imgPendiente.jpg"} he style={style.img} alt="" />
+                        src={img} style={style.img} alt="" />
                     <div className="card-body">
                         <h6>{articulo.name}</h6>
                         <h6>${articulo.price}</h6>

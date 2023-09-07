@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import axios from "axios";
 
 const MAXIMO_TAMANIO_BYTES = 3000000
-const EditImg = (archivo) => {
+const EditImg = ({ archivo, origen, id }) => {
 
     const [foto, setFoto] = useState([]);
     const defaultImg = useRef()
@@ -25,16 +25,35 @@ const EditImg = (archivo) => {
     const handelSubmit = async (e) => {
         e.preventDefault();
         let formData = new FormData();
-        for (let index = 0; index < foto.length; index++) {
-            formData.append('foto', foto[index]);
+        if (archivo == null) {
+            for (let index = 0; index < foto.length; index++) {
+                formData.append('foto', foto[index]);
+            }
+            await axios.post(`/api/archivo/${origen}/${id}`, formData)
+                .then(response => {
+                    setTimeout(function () {
+                        //console.log(`/archivo/${origen}/${id}`);
+                        alert("perfecto")
+                    }, 300);
+                }).catch(err => console.log(err))
         }
-        await axios.post("/articuloCategoria", formData)
-            .then(response => {
-                setTimeout(function () {
-                    alert("perfecto")
-                }, 800);
-            }).catch(err => console.log(err))
+        else {
+
+            for (let index = 0; index < foto.length; index++) {
+                formData.append('newFoto', foto[index]);
+            }
+            formData.append('foto', archivo.foto)
+
+            await axios.put(`/api/archivo/${origen}/${id}`, formData)
+                .then(response => {
+                    setTimeout(function () {
+                        alert("perfecto")
+                    }, 300);
+                }).catch(err => console.log(err))
+        }
     }
+
+
     const handleReset = () => {
         setImgFile("https://cdn-icons-png.flaticon.com/512/573/573119.png");
         defaultImg.current.src = imgFile
@@ -44,31 +63,32 @@ const EditImg = (archivo) => {
     return (
         <div>
             {/* <!-- Button trigger modal --> */}
-            <button type="button" class="bg-transparent border-0 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <i class="bi bi-pencil-square"></i>
+            <button type="button" className="bg-transparent border-0 text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i className="bi bi-pencil-square"> Image</i>
             </button>
 
             {/* <!-- Modal --> */}
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Editar Imagen</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h1 className="modal-title fs-5" id="exampleModalLabel">Editar Imagen</h1>
+                            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <form onSubmit={handelSubmit}>
-                            <div class="modal-body" className=' '>
+                            <div className="modal-body">
                                 <label htmlFor="img" className="d-flex justify-content-center">
                                     <img src={imgFile} ref={defaultImg} className="rounded-circle w-50" />
                                 </label>
+                                <span className='text-primary'>Maximo 3 MB</span>
                                 <input type="file" id="img"
                                     onChange={(e) => subirARchivos(e)}
                                     name="foto" style={{ display: "none", visibility: "hidden" }}
                                     accept="image/*" multiple />
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" onClick={handleReset} class="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
-                                <button type="submit" class="btn btn-primary">Save changes</button>
+                            <div className="modal-footer">
+                                <button type="button" onClick={handleReset} className="btn btn-secondary" data-bs-dismiss="modal" >Close</button>
+                                <button type="submit" className="btn btn-primary">Save changes</button>
                             </div>
                         </form>
                     </div>

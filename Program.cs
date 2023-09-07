@@ -1,4 +1,3 @@
-using System.Net;
 using Cadeteria;
 using Cadeteria.Authorization;
 using Cadeteria.Services;
@@ -36,13 +35,6 @@ builder.Services.AddScoped<IArticuloCategoriaRepository, ArticuloCategoriaReposi
 builder.Services.AddScoped<IArchivoRepository, ArchivoRepository>();
 builder.Services.AddScoped<IArchivoHelpers, ArchivoHelpers>();
 // builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-
-builder.Services.AddHttpsRedirection(options =>
-{
-    options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
-    options.HttpsPort = 5001;
-});
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

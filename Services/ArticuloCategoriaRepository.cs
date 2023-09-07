@@ -41,16 +41,9 @@ public class ArticuloCategoriaRepository : IArticuloCategoriaRepository
          .Skip((page - 1) * 4)
          .Take(4)
         .OrderBy(x => x.Articulo.Price)
-        //.ProjectTo<ArticuloCategoriaDTO>(_mapper.ConfigurationProvider)
         .ToListAsync();
-        // .Where(x => x.Categoria.Name.Contains(filtro.CategoriaName))
-        // .Where(x => x.Articulos.Name.Contains(filtro.ArticuloName))
-        //.Where(x => x.Articulos.Price >= filtro.PriceMin && x.Articulos.Price <= filtro.PriceMax)
 
-
-        var a = _mapper.Map<List<ArticuloCategoriaDTO>>(response);
-
-        return a;
+        return _mapper.Map<List<ArticuloCategoriaDTO>>(response);
     }
 
     public async Task Save(ArticuloCategoria artCad)

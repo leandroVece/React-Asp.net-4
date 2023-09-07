@@ -14,7 +14,6 @@ public class ArchivoRequesDTO
 }
 public class ArchivoUpdateDTO
 {
-    public string Name { get; set; }
     public string Foto { get; set; }
     public IFormFile newFoto { get; set; }
 }
