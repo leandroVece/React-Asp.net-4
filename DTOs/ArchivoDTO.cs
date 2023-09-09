@@ -22,6 +22,6 @@ public class ArchivoDTO
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Foto { get; set; }
-    public byte[] img { get; set; }
+    //public byte[] img { get; set; }
 
 }

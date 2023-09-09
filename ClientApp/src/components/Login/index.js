@@ -31,21 +31,21 @@ const Login = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         //console.log(auth.cookies)
         e.preventDefault();
         let options = {
             body: form,
             headers: { "content-type": "application/json" },
         };
-        helpHttp().post(url, options).then((res) => {
+        helpHttp().post(url, options).then(async (res) => {
             if (!res.err) {
                 auth.setLoginTouch(!auth.loginTouch)
-                auth.login(res)
+                await auth.login(res)
                 navigate("/")
             } else {
                 //navigate("/error")
-                console.log(res)
+                //console.log(res)
                 alert("Error intente nuevamente")
             }
         })

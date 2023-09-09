@@ -1408,13 +1408,77 @@ Cuando nosotros empaquetamos nuestro proyecto y lo subimos, todo estos archivos 
 
 Seguramente compartiran el mismo pensamiento que yo: "¿Para que guardo el nombre y la direccion si solo necesito uno de los dos? Y ¿no seria mas facil manejar la ruta de manera dinamica?
 
-La razon por la que guardamos las dos, es para evitar nuevos cambios que vamos a necesitar ahora. Y, la respuesta a la segunda pregunta es si. es mas facil manejarlo como una url, de esa manera solo tenemos que buscar el nombre del archivo en la carpeta estatica. Adicionalmente tengo que Recordar que este trabajo es puramente educativo, por lo que nos centraremos mas en aprender a como hacerlo que hacerlo correctamente desde el inicio.
+La razon por la que guardamos las dos, es para evitar nuevos cambios que vamos a necesitar ahora. Y, la respuesta a la segunda pregunta es si. es mas facil manejarlo como una ruta dinamica, de esa manera solo tenemos que buscar el nombre del archivo en la carpeta estatica. Adicionalmente tengo que Recordar que este trabajo es puramente educativo, por lo que nos centraremos mas en aprender a como hacerlo que hacerlo correctamente desde el inicio.
 
->Recordatorio Amigable: Las puebas y errores son los pasos fundamentales, segun mi humilde opinion, que todo programador no puede evitar. Si nos conformamos con poco, nunca creceremos y si buscamos lo facil nunca seremos competentes.
+>Recordatorio Amigable: Las puebas y errores son los pasos fundamentales que, segun mi humilde opinion, todo programador no puede evitar. Si nos conformamos con poco, nunca creceremos y si buscamos lo facil nunca seremos competentes.
 
 Claro que esta respuesta esta condicionada a la pregunta ¿que tan grande es el proyecto? Una mejor organizacion hasta cierto punto nos permitira ahorranos trabajo y ser mas eficiente a la hora de la busqueda. Por ejemplo, Crear una nueva carpeta cada año. Por lo general el usuario tiende a usar la informacion y los archivos mas nuevos, por lo que los archivos viejos se van desplegando lentamente a otro servidores que tiene menos consumos.
 
 De esta manera se puede economizar en gastos y el usuario puede obtener la informacion si es que lo necesitara en un futuro.
 
-Seguramente puedes 
+Volviendo al tema. Sabiendo ahora que todas las carpetas de archivos estaticos se moveran a la carpeta wwwroot ¿como podriamos hacer uso de las rutas estaticas para conseguir el mismo efecto?
+
+La solucion es simple, simplemente en el periodo de desarrollo vas a crear la misma carpeta que se crea al guardar archivos en la carpeta public donde.
+
+de esa manera podras simular lo que tendras en el hosting. Luego en los componentes que necesitan ser llamadas las imagenes vamos a usar **require.context():** require.contextes una característica especial admitida por el compilador de webpack que le permite obtener todos los módulos coincidentes a partir de algún directorio base.
+
+Como siempre voy a mostrar un ejemplo y lo demas es cuestion de imitar el proceso en los demas componentes.
+
+**Path:./ClientApp/src/components/articulos/card.js**
+
+    import React, { useState } from "react";
+    import { useNavigate } from "react-router-dom";
+
+    const imgLocal = require.context("../../../public/upload", true)
+
+    const Card = ({ data }) => {
+        const { id, articulo, categorias } = data
+        const nav = useNavigate()
+
+        const handelError = (e) => {
+            e.target.src = "./img/imgRota.jpg";
+            e.target.onerror = null;
+        }
+
+
+        const handelClick = () => {
+            nav("/ArticuloDetail/" + id)
+        }
+
+        const style = {
+            img: {
+                widgh: "280px",
+                height: "180px"
+            }
+        }
+
+        return (
+            <div className="col">
+                <a onClick={handelClick}>
+                    <div className="card m-auto">
+                        {/* <img onError={handelError}
+                            src={imgDb || "./img/imgPendiente.jpg"} alt="" /> 
+                        <img onError={handelError}
+                            src={imgLocal(`./${articulo.archivos[0]?.name}`) ||} style={style.img} alt="" />
+                        */}
+                        <img onError={handelError}
+                            src={imgLocal(articulo.archivos[0]?.name ? `./${articulo.archivos[0]?.name}` : "./imgPendiente.jpg")} style={style.img} alt="" />
+                        <div className="card-body">
+                            <h6>{articulo.name}</h6>
+                            <h6>${articulo.price}</h6>
+                            <button className="btn btn-primary" >Add cart</button>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        );
+    };
+
+    export default Card;
+
+>Recordatorio: Siempre llamen al require.context al final de todas sus importaciones. para evitar problemas de importaciones no reconocidas.
+
+Como podran notar la nueva forma de llamar es menos complicada que la anterior, Sin embargo, Segun nuestra aplicacion todavia permitimos a nuestro usuarios darle la opcion de subir o no archivos.
+
+por lo que es necesario tener imagenes por defecto en el caso de no tener una imagen o por algun problema al traer informacion de la base de datos.
 

@@ -5,10 +5,11 @@ import React, { useState } from "react";
 import { AuthRouter, useAuth } from "../Auth";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
-import axios from "axios";
-
 import './style.css';
 import Loader from "../Loader";
+
+const imgLocal = require.context("../../../public/upload", true);
+
 
 const Profile = () => {
     const auth = useAuth();
@@ -45,7 +46,7 @@ const Profile = () => {
             setImg("https://img.icons8.com/bubbles/100/000000/user.png")
         }
     }
-    console.log(auth.dbUser);
+
 
     return (
         <AuthRouter>
@@ -73,7 +74,9 @@ const Profile = () => {
                                                         <div className="m-b-25">
                                                             <span className="">
                                                                 <div className="circular--landscape">
-                                                                    <img src={img} onLoad={render} onError={handelError} className="img-radius "
+                                                                    {/* <img src={img} onLoad={render} onError={handelError} className="img-radius "
+                                                                        alt="User-Profile-Image" /> */}
+                                                                    <img src={imgLocal(auth.dbUser.profile?.archivo ? `./${auth.dbUser.profile?.archivo?.name}` : "./user.png")} onLoad={render} onError={handelError} className="img-radius "
                                                                         alt="User-Profile-Image" />
                                                                 </div>
                                                                 <EditImg

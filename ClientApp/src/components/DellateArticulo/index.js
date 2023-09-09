@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './style.css'
 
+const imgLocal = require.context("../../../public/upload", true)
+
 const Details = () => {
 
     const {
@@ -27,6 +29,14 @@ const Details = () => {
         e.target.onerror = null;
     }
 
+    const style = {
+        img: {
+            widgh: "420px",
+            height: "260px"
+        }
+    }
+    //console.log(db);
+
     return (
         <Container>
 
@@ -39,13 +49,27 @@ const Details = () => {
                             <div id="carouselExampleControls" className="carousel slide col-4" data-bs-ride="carousel">
                                 <div className="carousel-inner">
                                     {db.articulo?.archivos?.length > 0 ? (
-                                        db.articulo.archivos.map((arc, index) =>
-                                            <div className="carousel-item active" key={index} >
-                                                <img onError={handelError} src={arc?.foto} className="d-block w-100" alt="..." />
-                                            </div>
+                                        db.articulo.archivos.map((arc, index) => {
+                                            if (index === 0)
+                                                return <div className="carousel-item active" key={index} >
+                                                    <img onError={handelError}
+                                                        className="d-block w-100" alt="..."
+                                                        src={imgLocal(arc.name ? `./${arc.name}` : "./imgPendiente.jpg")}
+                                                        style={style.img}
+                                                    />
+                                                </div>
+                                            else
+                                                return <div className="carousel-item" key={index} >
+                                                    <img onError={handelError}
+                                                        className="d-block" alt="..."
+                                                        src={imgLocal(arc.name ? `./${arc.name}` : "./imgPendiente.jpg")}
+                                                        style={style.img}
+                                                    />
+                                                </div>
+                                        }
                                         )) : (
                                         <div className="carousel-item active">
-                                            <img src="./img/imgPd-flex justify-content-md-endiente.jpg" className="d-block w-100" alt="..." />
+                                            <img src="./img/imgPendiente.jpg" className="d-block w-100" alt="..." />
                                         </div>
                                     )}
                                 </div>
@@ -143,7 +167,7 @@ const Details = () => {
                                             <th scope="row">
                                                 <samp className="bi bi-star text-primary" />
                                             </th>
-                                            <td className="text-primary">3 Usuarios <i class="bi bi-person-circle "></i></td>
+                                            <td className="text-primary">3 Usuarios <i className="bi bi-person-circle "></i></td>
 
                                         </tr>
                                         <tr>
@@ -151,7 +175,7 @@ const Details = () => {
                                                 <samp className="bi bi-star text-primary" />
                                                 <samp className="bi bi-star text-primary" />
                                             </th>
-                                            <td className="text-primary">3 Usuarios <i class="bi bi-person-circle "></i></td>
+                                            <td className="text-primary">3 Usuarios <i className="bi bi-person-circle "></i></td>
 
                                         </tr>
                                         <tr>
@@ -160,7 +184,7 @@ const Details = () => {
                                                 <samp className="bi bi-star text-primary" />
                                                 <samp className="bi bi-star text-primary" />
                                             </th>
-                                            <td className="text-primary">3 Usuarios <i class="bi bi-person-circle "></i></td>
+                                            <td className="text-primary">3 Usuarios <i className="bi bi-person-circle "></i></td>
                                         </tr>
                                         <tr>
                                             <th scope="row">
@@ -169,7 +193,7 @@ const Details = () => {
                                                 <samp className="bi bi-star text-primary" />
                                                 <samp className="bi bi-star text-primary" />
                                             </th>
-                                            <td className="text-primary">3 Usuarios <i class="bi bi-person-circle "></i></td>
+                                            <td className="text-primary">3 Usuarios <i className="bi bi-person-circle "></i></td>
                                         </tr>
                                         <tr>
                                             <th scope="row">
@@ -179,7 +203,7 @@ const Details = () => {
                                                 <samp className="bi bi-star text-primary" />
                                                 <samp className="bi bi-star text-primary" />
                                             </th>
-                                            <td className="text-primary">3 Usuarios <i class="bi bi-person-circle "></i> </td>
+                                            <td className="text-primary">3 Usuarios <i className="bi bi-person-circle "></i> </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -198,7 +222,7 @@ const Details = () => {
                         <div className=''>
                             <div className="card w-75 my-4">
                                 <div className="card-header bg-dark text-white">
-                                    <span class="bi bi-person-circle"></span> Nombre de usuario
+                                    <span className="bi bi-person-circle"></span> Nombre de usuario
                                 </div>
                                 <div className="card-body " >
                                     <blockquote className="blockquote mb-0">
@@ -209,7 +233,7 @@ const Details = () => {
                             </div>
                             <div className="card w-75 my-4 d-flex justify-content-md-end ">
                                 <div className="card-header bg-dark text-white ">
-                                    <span class="bi bi-person-circle"></span> Nombre de usuario
+                                    <span className="bi bi-person-circle"></span> Nombre de usuario
                                 </div>
                                 <div className="card-body">
                                     <blockquote className="blockquote mb-0">
@@ -220,7 +244,7 @@ const Details = () => {
                             </div>
                             <div className="card w-75 my-4 d-flex justify-content-md-end">
                                 <div className="card-header bg-dark text-white">
-                                    <span class="bi bi-person-circle"></span> Nombre de usuario
+                                    <span className="bi bi-person-circle"></span> Nombre de usuario
                                 </div>
                                 <div className="card-body">
                                     <blockquote className="blockquote mb-0">

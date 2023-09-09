@@ -126,15 +126,19 @@ const FormArticulo = () => {
         formData.append('descripcion', form.descripcion);
         formData.append('stock', form.stock);
         for (let index = 0; index < foto.length; index++) {
+            if (index >= 4) {
+                alert("Maximo 4 imagenes")
+                return;
+            }
             formData.append('foto', foto[index]);
         }
         await axios.post("/articuloCategoria", formData)
             .then(response => {
                 setTimeout(function () {
-                    console.log(response.data);
+                    //console.log(response.data);
                     nav("/articulo")
                 }, 800);
-            }).catch(err => console.log(err))
+            }).catch(err => alert(err))
     }
 
     const handleChange = (e) => {
@@ -254,7 +258,7 @@ const FormArticulo = () => {
                                 <label htmlFor="img" className="label-art">
                                     <img src={imgFile} className="rounded-circle w-50" accept="image/*" />
                                 </label>
-                                <span>Tamaño maximo 3MB</span>
+                                <span>Tamaño maximo 3MB, hasta 4 Fotos</span>
                                 <input type="file" id="img" value={form.archivo}
                                     onChange={(e) => subirARchivos(e)}
                                     name="foto" style={{ display: "none", visibility: "hidden" }}

@@ -3,6 +3,7 @@ using Cadeteria.Authorization;
 using Cadeteria.DTOs;
 using Cadeteria.Models;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace Cadeteria;
 
@@ -15,6 +16,7 @@ public class ProfileController : ControllerBase
     private readonly DataContext _db;
     private readonly IMapper _mapper;
     private readonly ILogger<ProfileController> _logger;
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
 
 
     public ProfileController(ILogger<ProfileController> logger, IMapper mapper,
@@ -39,31 +41,42 @@ public class ProfileController : ControllerBase
 
         var response = _dbProfile.GetById(id);
 
-        if (response.Profile?.archivo != null)
-        {
-            if (System.IO.File.Exists(response.Profile?.archivo.Foto))
-            {
+        // if (response.Profile?.archivo != null)
+        // {
+        //     if (System.IO.File.Exists(response.Profile?.archivo.Foto))
+        //     {
 
-                var path = response.Profile.archivo.Foto;
-                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-                {
-                    using (var ms = new MemoryStream())
-                    {
-                        await fs.CopyToAsync(ms);
-                        response.Profile.archivo.img = ms.ToArray();
-                    }
-                }
-            }
-        }
+        //         var path = response.Profile.archivo.Foto;
+        //         using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+        //         {
+        //             using (var ms = new MemoryStream())
+        //             {
+        //                 await fs.CopyToAsync(ms);
+        //                 response.Profile.archivo.img = ms.ToArray();
+        //             }
+        //         }
+        //     }
+        // }
         return Ok(response);
     }
 
     [HttpPost]
     public IActionResult Post([FromBody] ProfileDTO Profile)
     {
-        var response = _mapper.Map<Models.Profile>(Profile);
-        _dbProfile.Save(response);
-        return Ok();
+        try
+        {
+            var response = _mapper.Map<Models.Profile>(Profile);
+            _dbProfile.Save(response);
+
+            Logger.Info("datos cargados {0}", response.Nombre);
+            return Ok();
+
+        }
+        catch (System.Exception ex)
+        {
+            Logger.Error(ex.Message);
+            throw;
+        }
     }
 
     [HttpPut("{id}")]

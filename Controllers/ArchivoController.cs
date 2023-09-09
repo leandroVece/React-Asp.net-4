@@ -3,6 +3,8 @@ using Cadeteria.Models;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using Cadeteria.DTOs;
+using NLog;
+using NLog.Fluent;
 
 namespace Cadeteria;
 
@@ -16,6 +18,7 @@ public class ArchivoController : ControllerBase
     private readonly IWebHostEnvironment _evriroment;
     private readonly IArchivoRepository _archivo;
     private readonly IArchivoHelpers _helpers;
+
 
 
     public ArchivoController(ILogger<ArchivoController> logger,
@@ -103,13 +106,14 @@ public class ArchivoController : ControllerBase
             var response = _mapper.Map<ArchivoPerfil>(data);
             response.perfilForeiKey = id;
             _archivo.SavePerfil(response);
+            _logger.LogDebug("desde arcjhivos");
             return Ok();
 
         }
         catch (System.Exception e)
         {
+            _logger.LogError(e.ToString());
             return Ok(e.ToString());
-            throw;
         }
     }
 

@@ -19,10 +19,6 @@ const Home = () => {
         })
     })
 
-    const ruta = useLocation()
-    console.log(ruta);
-
-
     return (
         <>
             <div className="d-flex justify-content-center bg-dark">

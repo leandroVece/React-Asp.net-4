@@ -29,7 +29,7 @@ const UpdateUser = () => {
                 setRol(res)
                 //setForm(auth.dbUser);
             } else {
-                console.log("Ocurrio un error Vuelva atra e intente de nuevo")
+                alert("Ocurrio un error Vuelva atra e intente de nuevo")
             }
         });
     }, [auth.url]);

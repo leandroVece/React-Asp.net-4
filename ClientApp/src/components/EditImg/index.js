@@ -35,7 +35,7 @@ const EditImg = ({ archivo, origen, id }) => {
                         //console.log(`/archivo/${origen}/${id}`);
                         alert("perfecto")
                     }, 300);
-                }).catch(err => console.log(err))
+                }).catch(err => alert(err))
         }
         else {
 
@@ -49,7 +49,7 @@ const EditImg = ({ archivo, origen, id }) => {
                     setTimeout(function () {
                         alert("perfecto")
                     }, 300);
-                }).catch(err => console.log(err))
+                }).catch(err => alert(err))
         }
     }
 

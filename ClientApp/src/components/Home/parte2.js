@@ -41,7 +41,7 @@ const Parte2 = function (props) {
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="left-image ">
-                                        <img className="w-75" src="https://www.komododigital.co.uk/app/uploads/2021/05/React-1.jpg" alt="" />
+                                        <img className="w-75" src="./img/react.jpg" alt="" />
                                     </div>
                                 </div>
                                 <br />
@@ -93,7 +93,7 @@ const Parte2 = function (props) {
                                 </div>
                                 <div className="col-md-6">
                                     <div className="right-image ">
-                                        <img className=" w-75" src="https://global.discourse-cdn.com/auth0/original/3X/3/0/3077517c953cf52ef5d685763cdd7cf8864a2bb0.png" alt="" />
+                                        <img className=" w-75" src="./img/net.png" alt="" />
                                     </div>
                                 </div>
                             </div>

@@ -31,7 +31,7 @@ const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(form);
+        //console.log(form);
         let options = {
             body: form,
             headers: {
@@ -44,7 +44,7 @@ const Register = () => {
                 //setError(res);
                 alert("A ocurrido un error inesperado. Vuelva atras e intente de nuevo")
             } else {
-                console.log(res);
+                //console.log(res);
                 navigate("/login")
             }
         })

@@ -33,7 +33,7 @@ function AuthProvider({ children }) {
 
             } else {
                 setDbUser(null)
-                console.log(res)
+                //console.log(res)
             }
         });
     }, [url]);
@@ -52,7 +52,7 @@ function AuthProvider({ children }) {
                 //setError(res);
                 alert("A oc¿urrido un error inesperado. Vuelva atras e intente de nuevo")
             } else {
-                console.log(res);
+                //console.log(res);
                 setDbUser([...dbUser, res]);
             }
         })
@@ -100,7 +100,7 @@ function AuthProvider({ children }) {
     }
     const deleteWithTokenAndUrl = (id, url) => {
         let endpoint = `/${url}/${id}`;
-        console.log(endpoint)
+        //console.log(endpoint)
         let options = {
             headers: {
                 'Content-Type': 'application/json',
@@ -116,12 +116,13 @@ function AuthProvider({ children }) {
     }
 
     const login = (data) => {
-        console.log(data);
+
         cookies.set('id', data.id, { path: '/', maxAge: 60 * 60 * 24 })
         cookies.set('name', data.userName, { path: '/', maxAge: 30 * 60 * 24 })
         cookies.set('rol', data.rol, { path: '/', maxAge: 60 * 60 * 24 })
         cookies.set('id_profile', data.id_profile, { path: '/', maxAge: 60 * 60 * 24 })
         cookies.set('Token', data.token, { path: '/', maxAge: 60 * 60 * 24 })
+
     }
 
     const logout = () => {
@@ -129,7 +130,6 @@ function AuthProvider({ children }) {
         cookies.remove('name', { path: '/' })
         cookies.remove('rol', { path: '/' })
         cookies.remove('id_profile', { path: '/' })
-        cookies.remove('id_prefile', { path: '/' })
         cookies.remove('Token', { path: '/' })
         return <Navigate to='/login' />
     }
