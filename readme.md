@@ -1482,3 +1482,4 @@ Como podran notar la nueva forma de llamar es menos complicada que la anterior, 
 
 por lo que es necesario tener imagenes por defecto en el caso de no tener una imagen o por algun problema al traer informacion de la base de datos.
 
+Si llegaste hasta Aqui **Felicidades completate el cuarto turorial.** Un saludo y nos vemos en la siguiente parte.
